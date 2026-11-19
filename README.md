@@ -7,7 +7,6 @@
 
   <p align="center">
     A web-based application designed to support non-profit organizations in managing their charitable activities through a centralized platform. <br />
-    &middot;
     <a href="https://github.com/thanneesharamesh/CharityManagementSystem/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
     <a href="https://github.com/thanneesharamesh/CharityManagementSystem/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
