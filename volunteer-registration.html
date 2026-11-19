@@ -13,18 +13,14 @@
         <h1>Charity Management</h1>
         <p>Centralised Non-Profit Portal</p>
       </div>
-      <div class="nav-group-label" data-role="admin">Admin Modules</div>
-      <a href="fundraising-campaign.html" class="nav-item" data-role="admin">Fundraising Campaign Management</a>
-      <a href="donor-beneficiary-management.html" class="nav-item" data-role="admin">Donor, Donation &amp; Beneficiary</a>
-      <a href="assistance-distribution.html" class="nav-item" data-role="admin">Assistance Distribution Management</a>
-      <div class="nav-group-label" data-role="user">User Modules</div>
-      <a href="request-aid.html" class="nav-item" data-role="user">Request Aid</a>
-      <a href="volunteer-registration.html" class="nav-item active" data-role="user">Volunteer Registration</a>
-      <a href="donate.html" class="nav-item" data-role="user">Donate</a>
-      <button class="mode-toggle" id="mode-toggle" type="button" role="switch" aria-checked="false" aria-label="Switch to admin mode">
-        <span class="mode-toggle-track" aria-hidden="true"><span class="mode-toggle-thumb"></span></span>
-        <span class="mode-toggle-label">User mode</span>
-      </button>
+      <nav class="role-switch" aria-label="Portal mode">
+        <a href="donor-beneficiary-management.html" class="role-btn">Admin Mode</a>
+        <a href="donate.html" class="role-btn active" aria-current="true">User Mode</a>
+      </nav>
+      <div class="nav-group-label">User Modules</div>
+      <a href="request-aid.html" class="nav-item">Request Aid</a>
+      <a href="volunteer-registration.html" class="nav-item active" aria-current="page">Volunteer Registration</a>
+      <a href="donate.html" class="nav-item">Donate</a>
     </aside>
 
     <main class="main-content">
@@ -33,6 +29,5 @@
       </div>
     </main>
   </div>
-  <script src="role-mode.js"></script>
 </body>
 </html>
