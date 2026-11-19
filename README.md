@@ -1,7 +1,6 @@
-A web-based application designed to support non-profit organizations in managing their charitable activities through a centralized platform. 
+
 <br />
 <div align="center">
-    <img src="images/POLELogo.jpeg" alt="Logo" width="500" height="300">
   </a>
 
   <h3 align="center">Clinic Management System</h3>
