@@ -89,7 +89,7 @@ The project follows a modular architecture:
 
 # Contributors
 This project was a collaborative effort by the following members:
-* **AI integration, ESP32 programming & Testing: Choong Jun Zac [GitHub](https://github.com/ishtardsama), [Email](noteethme@gmail.com)**
+* **AI integration, ESP32 programming & Testing: Choong Jun Zac [GitHub](https://github.com/ishtardsama)**
 * **Mobile App development(Backend/Frontend Design), UX & Testing: Oh Chu Meng [GitHub](https://github.com/MengsChill)**
 * **Electrical Engineering, Prototype Modeling & Testing: Teoh Yue Wen [GitHub](https://github.com/TealApples)**
 * **Budget allocation, Finance, Marketing: Jaccob Chin Sing Hung(No Github 😢)**
