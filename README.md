@@ -40,6 +40,7 @@ The proposed Charity Management System is a web-based application designed to su
 
 ## Roadmap
 - [ ] UI Draft
+- [ ] Database Initialization
 
 [Propose Features](https://github.com/thanneesharamesh/CharityManagementSystem/issues/new?labels=enhancement&template=feature-request---.md)
 
