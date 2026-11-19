@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charity Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>Charity Management</h1>
+        <p>Centralised Non-Profit Portal</p>
+      </div>
+      <div class="nav-group-label" data-role="admin">Admin Modules</div>
+      <a href="fundraising-campaign.html" class="nav-item" data-role="admin">Fundraising Campaign Management</a>
+      <a href="donor-beneficiary-management.html" class="nav-item" data-role="admin">Donor, Donation &amp; Beneficiary</a>
+      <a href="assistance-distribution.html" class="nav-item" data-role="admin">Assistance Distribution Management</a>
+      <div class="nav-group-label" data-role="user">User Modules</div>
+      <a href="request-aid.html" class="nav-item" data-role="user">Request Aid</a>
+      <a href="volunteer-registration.html" class="nav-item" data-role="user">Volunteer Registration</a>
+      <a href="donate.html" class="nav-item active" data-role="user">Donate</a>
+      <button class="mode-toggle" id="mode-toggle" type="button" role="switch" aria-checked="false" aria-label="Switch to admin mode">
+        <span class="mode-toggle-track" aria-hidden="true"><span class="mode-toggle-thumb"></span></span>
+        <span class="mode-toggle-label">User mode</span>
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <div class="module-wrapper">
+        <div class="page-header">
+          <h2>Donate</h2>
+          <p>Submit financial or non-financial donations to active charitable campaigns and track or manage your pending contributions.</p>
+        </div>
+
+        <!-- Submit Donation Form -->
+        <div class="card">
+          <div class="card-title">Make a New Donation</div>
+          <form>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="user-campaign">Select Charitable Campaign</label>
+                <select id="user-campaign">
+                  <option>General</option>
+                  <option>Penang Flood Relief Fund</option>
+                  <option>Community Food Bank Drive</option>
+                  <option>Back-to-School Youth Support</option>
+                  <option>Medical Aid for Seniors</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="user-don-type">Donation Type</label>
+                <select id="user-don-type">
+                  <option>Financial Donation</option>
+                  <option>Non-Financial (Food / Clothing / Supplies)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="user-don-amount">Amount (RM) — if Financial</label>
+                <input type="number" id="user-don-amount" min="1" placeholder="e.g. 100">
+              </div>
+              <div class="form-group">
+                <label for="user-don-date">Preferred Date</label>
+                <input type="date" id="user-don-date">
+              </div>
+              <div class="form-group full-width">
+                <label for="user-don-notes">Item Description / Remarks (for Non-Financial or Notes)</label>
+                <textarea id="user-don-notes" placeholder="e.g. 10kg rice, canned food, or delivery/drop-off notes..."></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Submit Donation</button>
+              <button type="reset" class="btn btn-secondary">Reset Form</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Update Pending Donation Card (UI Draft Preview) -->
+        <div class="card">
+          <div class="card-title">Update Pending Donation (Draft View)</div>
+          <form>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="edit-don-id">Pending Donation ID</label>
+                <input type="text" id="edit-don-id" value="DON-1045" readonly>
+              </div>
+              <div class="form-group">
+                <label for="edit-don-campaign">Campaign</label>
+                <select id="edit-don-campaign">
+                  <option selected>Community Food Bank Drive</option>
+                  <option>Penang Flood Relief Fund</option>
+                  <option>Back-to-School Youth Support</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-don-details">Updated Amount / Item Details</label>
+                <input type="text" id="edit-don-details" value="10 Boxes Canned Food &amp; Rice">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <button type="button" class="btn btn-delete">Cancel Donation</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- User Donation History -->
+        <div class="card">
+          <div class="card-title">My Donation History</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Donation ID</th>
+                  <th>Campaign</th>
+                  <th>Type</th>
+                  <th>Amount / Details</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DON-1045</td>
+                  <td>Community Food Bank Drive</td>
+                  <td><span class="badge badge-yellow">Non-Financial</span></td>
+                  <td>10 Boxes Canned Food &amp; Rice</td>
+                  <td>2026-11-19</td>
+                  <td><span class="badge badge-yellow">Pending Verification</span></td>
+                  <td class="actions-cell">
+                    <button type="button" class="btn btn-sm btn-edit">Update</button>
+                    <button type="button" class="btn btn-sm btn-delete">Cancel</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DON-1038</td>
+                  <td>Penang Flood Relief Fund</td>
+                  <td><span class="badge badge-blue">Financial</span></td>
+                  <td>RM 200.00</td>
+                  <td>2026-11-12</td>
+                  <td><span class="badge badge-green">Verified</span></td>
+                  <td class="actions-cell">
+                    <button type="button" class="btn btn-sm btn-disabled" disabled>Locked</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DON-1019</td>
+                  <td>Back-to-School Youth Support</td>
+                  <td><span class="badge badge-blue">Financial</span></td>
+                  <td>RM 150.00</td>
+                  <td>2026-10-28</td>
+                  <td><span class="badge badge-green">Verified</span></td>
+                  <td class="actions-cell">
+                    <button type="button" class="btn btn-sm btn-disabled" disabled>Locked</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="role-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charity Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>Charity Management</h1>
+        <p>Centralised Non-Profit Portal</p>
+      </div>
+      <div class="nav-group-label" data-role="admin">Admin Modules</div>
+      <a href="fundraising-campaign.html" class="nav-item" data-role="admin">Fundraising Campaign Management</a>
+      <a href="donor-beneficiary-management.html" class="nav-item active" data-role="admin">Donor, Donation &amp; Beneficiary</a>
+      <a href="assistance-distribution.html" class="nav-item" data-role="admin">Assistance Distribution Management</a>
+      <div class="nav-group-label" data-role="user">User Modules</div>
+      <a href="request-aid.html" class="nav-item" data-role="user">Request Aid</a>
+      <a href="volunteer-registration.html" class="nav-item" data-role="user">Volunteer Registration</a>
+      <a href="donate.html" class="nav-item" data-role="user">Donate</a>
+      <button class="mode-toggle" id="mode-toggle" type="button" role="switch" aria-checked="false" aria-label="Switch to admin mode">
+        <span class="mode-toggle-track" aria-hidden="true"><span class="mode-toggle-thumb"></span></span>
+        <span class="mode-toggle-label">User mode</span>
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <div class="module-wrapper">
+        <div class="page-header">
+          <h2>Donor, Donation &amp; Beneficiary Management</h2>
+          <p>Manage donor profiles, financial and non-financial donations, beneficiary records, and eligibility assessments.</p>
+        </div>
+
+        <!-- Overview Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Registered Donors</div>
+            <div class="stat-value">128</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Financial Donations</div>
+            <div class="stat-value">RM 45,800</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Registered Beneficiaries</div>
+            <div class="stat-value">64</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pending Assessments</div>
+            <div class="stat-value">9</div>
+          </div>
+        </div>
+
+        <!-- Pure CSS Sub-Tabs -->
+        <input type="radio" name="ddb-tabs" id="tab-donors" class="state-radio" checked>
+        <input type="radio" name="ddb-tabs" id="tab-donations" class="state-radio">
+        <input type="radio" name="ddb-tabs" id="tab-beneficiaries" class="state-radio">
+        <input type="radio" name="ddb-tabs" id="tab-eligibility" class="state-radio">
+
+        <div class="tab-bar">
+          <label for="tab-donors" class="tab-btn">Donors</label>
+          <label for="tab-donations" class="tab-btn">Donations</label>
+          <label for="tab-beneficiaries" class="tab-btn">Beneficiaries</label>
+          <label for="tab-eligibility" class="tab-btn">Eligibility Assessment</label>
+        </div>
+
+        <!-- TAB 1: Donor Management -->
+        <div class="tab-panel" id="panel-donors">
+          <div class="card">
+            <div class="card-title">Add Donor Record</div>
+            <form>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="donor-name">Full Name</label>
+                  <input type="text" id="donor-name" placeholder="e.g. Tan Wei Ming">
+                </div>
+                <div class="form-group">
+                  <label for="donor-email">Email Address</label>
+                  <input type="email" id="donor-email" placeholder="e.g. weiming@email.com">
+                </div>
+                <div class="form-group">
+                  <label for="donor-phone">Contact Number</label>
+                  <input type="tel" id="donor-phone" placeholder="e.g. 012-3456789">
+                </div>
+                <div class="form-group">
+                  <label for="donor-address">Address</label>
+                  <input type="text" id="donor-address" placeholder="e.g. George Town, Penang">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Donor</button>
+                <button type="reset" class="btn btn-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="table-toolbar">
+              <div class="card-title" style="margin-bottom: 0;">Donor Records &amp; History</div>
+              <input type="text" class="search-input" placeholder="Search donor name or email...">
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Donor ID</th>
+                    <th>Full Name</th>
+                    <th>Contact Details</th>
+                    <th>Donation History</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>DNR-001</td>
+                    <td>Tan Wei Ming</td>
+                    <td>weiming@gmail.com<br><small>012-3456789</small></td>
+                    <td>4 Donations (RM 1,250)</td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DNR-002</td>
+                    <td>Nurul Aina Binti Ali</td>
+                    <td>aina.ali@gmail.com<br><small>019-8765432</small></td>
+                    <td>2 Donations (Food &amp; Clothing)</td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DNR-003</td>
+                    <td>Kavitha Subramaniam</td>
+                    <td>kavithaS@gmail.com<br><small>016-2233445</small></td>
+                    <td>6 Donations (RM 3,000)</td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Donation Management -->
+        <div class="tab-panel" id="panel-donations">
+          <div class="card">
+            <div class="card-title">Add Donation Record</div>
+            <form>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="admin-don-donor">Donor Name</label>
+                  <input type="text" id="admin-don-donor" placeholder="Select or enter donor">
+                </div>
+                <div class="form-group">
+                  <label for="admin-don-type">Donation Type</label>
+                  <select id="admin-don-type">
+                    <option>Financial</option>
+                    <option>Non-Financial (Goods/Items)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="admin-don-amount">Amount (RM) / Item Details</label>
+                  <input type="text" id="admin-don-amount" placeholder="e.g. RM 500 or 20kg Rice">
+                </div>
+                <div class="form-group">
+                  <label for="admin-don-date">Donation Date</label>
+                  <input type="date" id="admin-don-date">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Record Donation</button>
+                <button type="reset" class="btn btn-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="table-toolbar">
+              <div class="card-title" style="margin-bottom: 0;">All Donation Records</div>
+              <input type="text" class="search-input" placeholder="Search donation ID or type...">
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Donation ID</th>
+                    <th>Donor</th>
+                    <th>Type</th>
+                    <th>Amount / Details</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>DON-1042</td>
+                    <td>Tan Wei Ming</td>
+                    <td><span class="badge badge-blue">Financial</span></td>
+                    <td>RM 500.00</td>
+                    <td>2026-11-18</td>
+                    <td><span class="badge badge-green">Verified</span></td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DON-1043</td>
+                    <td>Nurul Aina Binti Ali</td>
+                    <td><span class="badge badge-yellow">Non-Financial</span></td>
+                    <td>15 Boxes Dry Food</td>
+                    <td>2026-11-19</td>
+                    <td><span class="badge badge-yellow">Pending</span></td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Beneficiary Management -->
+        <div class="tab-panel" id="panel-beneficiaries">
+          <div class="card">
+            <div class="card-title">Register Beneficiary Record</div>
+            <form>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="ben-name">Beneficiary Full Name</label>
+                  <input type="text" id="ben-name" placeholder="e.g. Ahmad Bin Ismail">
+                </div>
+                <div class="form-group">
+                  <label for="ben-contact">Contact Number</label>
+                  <input type="tel" id="ben-contact" placeholder="e.g. 011-23456789">
+                </div>
+                <div class="form-group">
+                  <label for="ben-household">Household Size</label>
+                  <input type="number" id="ben-household" min="1" placeholder="e.g. 5">
+                </div>
+                <div class="form-group">
+                  <label for="ben-income">Monthly Household Income (RM)</label>
+                  <input type="number" id="ben-income" min="0" placeholder="e.g. 1600">
+                </div>
+                <div class="form-group full-width">
+                  <label for="ben-needs">Assistance Requirements</label>
+                  <textarea id="ben-needs" placeholder="Describe required food, clothing, medical, or financial assistance..."></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Register Beneficiary</button>
+                <button type="reset" class="btn btn-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="table-toolbar">
+              <div class="card-title" style="margin-bottom: 0;">Registered Beneficiaries</div>
+              <input type="text" class="search-input" placeholder="Search beneficiary...">
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Beneficiary ID</th>
+                    <th>Personal Information</th>
+                    <th>Household Details</th>
+                    <th>Assistance Requirements</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BEN-201</td>
+                    <td>Ahmad Bin Ismail<br><small>011-23456789</small></td>
+                    <td>5 Members &middot; RM 1,600/mo</td>
+                    <td>Monthly food basket &amp; school supplies</td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>BEN-202</td>
+                    <td>Lim Mei Ling<br><small>014-9988776</small></td>
+                    <td>3 Members &middot; RM 1,200/mo</td>
+                    <td>Financial support for medical bills</td>
+                    <td class="actions-cell">
+                      <button type="button" class="btn btn-sm btn-edit">Update</button>
+                      <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: Beneficiary Eligibility Assessment -->
+        <div class="tab-panel" id="panel-eligibility">
+          <div class="card">
+            <div class="card-title">Predefined Eligibility Criteria</div>
+            <ul class="criteria-list">
+              <li><strong>Income Threshold:</strong> Monthly household income below RM 2,500 (B40 category).</li>
+              <li><strong>Household Dependency:</strong> Priority given to households with 3 or more dependents, elderly members, or single parents.</li>
+              <li><strong>Verification:</strong> Valid identification and supporting household/income documents submitted.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Applicant Eligibility Evaluation</div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Applicant ID</th>
+                    <th>Name</th>
+                    <th>Monthly Income</th>
+                    <th>Dependents</th>
+                    <th>Documents</th>
+                    <th>Assessment Result</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>BEN-201</td>
+                    <td>Ahmad Bin Ismail</td>
+                    <td>RM 1,600</td>
+                    <td>4</td>
+                    <td>Verified</td>
+                    <td><span class="badge badge-green">Eligible</span></td>
+                    <td><button type="button" class="btn btn-sm btn-edit">Re-evaluate</button></td>
+                  </tr>
+                  <tr>
+                    <td>BEN-203</td>
+                    <td>Daniel Chong</td>
+                    <td>RM 3,400</td>
+                    <td>1</td>
+                    <td>Verified</td>
+                    <td><span class="badge badge-red">Not Eligible</span></td>
+                    <td><button type="button" class="btn btn-sm btn-edit">Re-evaluate</button></td>
+                  </tr>
+                  <tr>
+                    <td>BEN-204</td>
+                    <td>Siti Rahmah</td>
+                    <td>RM 1,850</td>
+                    <td>3</td>
+                    <td>Pending Check</td>
+                    <td><span class="badge badge-yellow">Pending Review</span></td>
+                    <td><button type="button" class="btn btn-sm btn-primary">Assess</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="role-mode.js"></script>
+</body>
+</html>
