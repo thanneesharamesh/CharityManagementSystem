@@ -39,11 +39,9 @@ The proposed Charity Management System is a web-based application designed to su
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Roadmap
-
-[Propose Features](https://github.com/thanneesharamesh/CharityManagementSystem/issues/new?labels=enhancement&template=feature-request---.md)
-
 - [ ] UI Draft
 
+[Propose Features](https://github.com/thanneesharamesh/CharityManagementSystem/issues/new?labels=enhancement&template=feature-request---.md)
 See the [open issues](https://github.com/thanneesharamesh/CharityManagementSystem/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
