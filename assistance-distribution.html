@@ -24,8 +24,166 @@
     </aside>
 
     <main class="main-content">
-      <div class="placeholder-box">
-        <h2>Charity Assistance Distribution Management</h2>
+      <div class="module-wrapper">
+        <div class="page-header">
+          <h2>Charity Assistance Distribution Management</h2>
+          <p>Create, update, view, and delete distribution records while tracking remaining item stock.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Food Packs Remaining</div>
+            <div class="stat-value">145</div>
+            <small>Updated after last distribution</small>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Medical Kits Remaining</div>
+            <div class="stat-value">62</div>
+            <small>Low stock threshold: 20</small>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Hygiene Kits Remaining</div>
+            <div class="stat-value">98</div>
+            <small>Available for distribution</small>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cash Vouchers Remaining</div>
+            <div class="stat-value">30</div>
+            <small>RM 200 per voucher</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Create / Update Distribution Record</div>
+          <form>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="distribution-beneficiary">Beneficiary Name / ID</label>
+                <input type="text" id="distribution-beneficiary" placeholder="e.g., Ahmad bin Ali (BEN-102)" required>
+              </div>
+              <div class="form-group">
+                <label for="distribution-type">Assistance Type</label>
+                <select id="distribution-type" required>
+                  <option value="">-- Select Assistance Type --</option>
+                  <option value="food">Food Pack</option>
+                  <option value="medical">Medical Kit</option>
+                  <option value="hygiene">Hygiene Kit</option>
+                  <option value="voucher">Cash Voucher</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="distribution-quantity">Quantity</label>
+                <input type="number" id="distribution-quantity" min="1" placeholder="e.g., 2" required>
+              </div>
+              <div class="form-group">
+                <label for="distribution-date">Distribution Date</label>
+                <input type="date" id="distribution-date" required>
+              </div>
+              <div class="form-group full-width">
+                <label for="distribution-notes">Distribution Details / Notes</label>
+                <textarea id="distribution-notes" rows="2" placeholder="Optional remarks or delivery location..."></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save Record</button>
+              <button type="reset" class="btn btn-secondary">Clear Form</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Distribution Records</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Record ID</th>
+                  <th>Beneficiary</th>
+                  <th>Assistance Type</th>
+                  <th>Quantity</th>
+                  <th>Distribution Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>DIST-001</td>
+                  <td>Ahmad bin Ali</td>
+                  <td>Food Pack</td>
+                  <td>3</td>
+                  <td>2026-11-18</td>
+                  <td class="actions-cell">
+                    <button type="button" class="btn btn-sm btn-edit">View</button>
+                    <button type="button" class="btn btn-sm btn-edit">Update</button>
+                    <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DIST-002</td>
+                  <td>Siti Nurhaliza</td>
+                  <td>Medical Kit</td>
+                  <td>1</td>
+                  <td>2026-11-20</td>
+                  <td class="actions-cell">
+                    <button type="button" class="btn btn-sm btn-edit">View</button>
+                    <button type="button" class="btn btn-sm btn-edit">Update</button>
+                    <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>DIST-003</td>
+                  <td>Tan Wei Ming</td>
+                  <td>Cash Voucher</td>
+                  <td>2</td>
+                  <td>2026-11-22</td>
+                  <td class="actions-cell">
+                    <button type="button" class="btn btn-sm btn-edit">View</button>
+                    <button type="button" class="btn btn-sm btn-edit">Update</button>
+                    <button type="button" class="btn btn-sm btn-delete">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <section aria-labelledby="my-distributions-heading">
+          <div class="page-header">
+            <h2 id="my-distributions-heading">My Charity Assistance Records</h2>
+            <p>View all charity assistance distributions you have received.</p>
+          </div>
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Record ID</th>
+                    <th>Assistance Type</th>
+                    <th>Quantity Received</th>
+                    <th>Distribution Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>DIST-001</td>
+                    <td>Food Pack</td>
+                    <td>3</td>
+                    <td>2026-11-18</td>
+                    <td><span class="badge badge-green">Received</span></td>
+                  </tr>
+                  <tr>
+                    <td>DIST-014</td>
+                    <td>Hygiene Kit</td>
+                    <td>1</td>
+                    <td>2026-10-29</td>
+                    <td><span class="badge badge-green">Received</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   </div>
