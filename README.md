@@ -35,6 +35,7 @@ The proposed Charity Management System is a web-based application designed to su
 **Backend & Database**
 * ![Python](https://img.shields.io/badge/python-%233670A0.svg?style=for-the-badge&logo=python&logoColor=ffdd54)
 * ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+* ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
