@@ -36,18 +36,6 @@
             <form>
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="request-name">Full Name</label>
-                  <input type="text" id="request-name" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                  <label for="request-phone">Phone Number</label>
-                  <input type="tel" id="request-phone" placeholder="e.g., 012-3456789" required>
-                </div>
-                <div class="form-group">
-                  <label for="request-email">Email Address</label>
-                  <input type="email" id="request-email" placeholder="you@example.com" required>
-                </div>
-                <div class="form-group">
                   <label for="request-type">Required Assistance Type</label>
                   <select id="request-type" required>
                     <option value="">-- Select Assistance --</option>
@@ -56,10 +44,6 @@
                     <option value="hygiene">Hygiene Kit</option>
                     <option value="voucher">Cash Voucher</option>
                   </select>
-                </div>
-                <div class="form-group full-width">
-                  <label for="request-address">Residential Address</label>
-                  <input type="text" id="request-address" placeholder="Street, City, Postcode" required>
                 </div>
                 <div class="form-group full-width">
                   <label for="request-details">Assistance Details &amp; Reason</label>
@@ -111,62 +95,6 @@
           </div>
         </section>
 
-        <section aria-labelledby="admin-aid-heading">
-          <div class="page-header">
-            <h2 id="admin-aid-heading">Submitted Aid Requests</h2>
-            <p>Review, assess, and approve or reject aid requests submitted by users.</p>
-          </div>
-          <div class="card">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Request ID</th>
-                    <th>Applicant Name</th>
-                    <th>Contact</th>
-                    <th>Requested Aid</th>
-                    <th>Status</th>
-                    <th>Assessment Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>REQ-204</td>
-                    <td>Mei Ling</td>
-                    <td>012-3456789</td>
-                    <td>Food Pack (2 units)</td>
-                    <td><span class="badge badge-yellow">Pending</span></td>
-                    <td class="actions-cell">
-                      <button type="button" class="btn btn-sm btn-edit">Assess</button>
-                      <button type="button" class="btn btn-sm btn-primary">Approve</button>
-                      <button type="button" class="btn btn-sm btn-delete">Reject</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>REQ-205</td>
-                    <td>Rajesh Kumar</td>
-                    <td>019-8765432</td>
-                    <td>Medical Kit (1 unit)</td>
-                    <td><span class="badge badge-green">Approved</span></td>
-                    <td class="actions-cell">
-                      <button type="button" class="btn btn-sm btn-edit">View</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>REQ-206</td>
-                    <td>Farah Nadia</td>
-                    <td>017-5544332</td>
-                    <td>Cash Voucher (1 unit)</td>
-                    <td><span class="badge badge-red">Rejected</span></td>
-                    <td class="actions-cell">
-                      <button type="button" class="btn btn-sm btn-edit">View</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
       </div>
     </main>
   </div>
