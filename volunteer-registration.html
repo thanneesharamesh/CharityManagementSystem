@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charity Management System</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .tab-btn { border: none; }
+    .tab-btn.selected { background: #0f172a; color: white; }
+  </style>
 </head>
 <body>
   <div class="app-layout">
@@ -13,21 +17,358 @@
         <h1>Charity Management</h1>
         <p>Centralised Non-Profit Portal</p>
       </div>
-      <nav class="role-switch" aria-label="Portal mode">
-        <a href="donor-beneficiary-management.html" class="role-btn">Admin Mode</a>
-        <a href="donate.html" class="role-btn active" aria-current="true">User Mode</a>
+
+      <nav class="role-switch">
+        <a href="fundraising-campaign.html" class="role-btn">Admin Mode</a>
+        <a href="donate.html" class="role-btn active">User Mode</a>
       </nav>
+
       <div class="nav-group-label">User Modules</div>
       <a href="request-aid.html" class="nav-item">Request Aid</a>
-      <a href="volunteer-registration.html" class="nav-item active" aria-current="page">Volunteer Registration</a>
+      <a href="volunteer-registration.html" class="nav-item active">Volunteer Registration</a>
       <a href="donate.html" class="nav-item">Donate</a>
     </aside>
 
     <main class="main-content">
-      <div class="placeholder-box">
-        <h2>Volunteer Registration</h2>
+      <div class="module-wrapper">
+        <div class="page-header">
+          <h2>Volunteer Registration</h2>
+          <p>Register as a volunteer and manage your volunteering activities.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Registration Status</div>
+            <div class="stat-value" id="registrationStatus">Not Registered</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Assigned Campaigns</div>
+            <div class="stat-value" id="totalAssignments">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Completed Assignments</div>
+            <div class="stat-value" id="completedAssignments">0</div>
+          </div>
+        </div>
+
+        <div class="tab-bar">
+          <button class="tab-btn selected" onclick="showTab('volunteer', this)">Volunteer Management</button>
+          <button class="tab-btn" onclick="showTab('assignments', this)">My Assignments</button>
+        </div>
+
+        <!-- Volunteer Management -->
+        <section id="volunteer">
+          <div class="card">
+            <h3 class="card-title" id="formTitle">Volunteer Registration Form</h3>
+
+            <form id="volunteerForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input name="name" placeholder="Enter full name" maxlength="100" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input name="email" type="email" placeholder="Enter email address" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Contact Number</label>
+                  <input name="phone" type="tel" placeholder="Enter contact number"
+                         pattern="[0-9]{10,12}" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Availability</label>
+                  <select name="availability" required>
+                    <option value="">Select availability</option>
+                    <option>Weekdays</option>
+                    <option>Weekends</option>
+                    <option>Flexible</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label>Skills and Experience</label>
+                  <textarea name="skills" maxlength="500"
+                            placeholder="Describe your skills and experience" required></textarea>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-primary" id="saveButton">Register as Volunteer</button>
+                <button type="reset" class="btn btn-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">My Registration Details</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Skills</th>
+                    <th>Availability</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="volunteerTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- My Assignments -->
+        <section id="assignments" hidden>
+          <div class="card">
+            <h3 class="card-title">My Assigned Campaigns</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Campaign Name</th>
+                    <th>Assigned Role</th>
+                    <th>Assignment Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="assignmentTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const form = $("volunteerForm");
+    const read = key => JSON.parse(localStorage.getItem(key) || "[]");
+
+    let volunteerId = localStorage.getItem("currentVolunteerId");
+    let editing = false;
+
+    const currentVolunteer = () =>
+      read("charityVolunteers").find(v => v.id === volunteerId);
+
+    const myAssignments = () =>
+      read("charityAssignments").filter(a => a.volunteerId === volunteerId);
+
+    const safe = value => {
+      const div = document.createElement("div");
+      div.textContent = value ?? "";
+      return div.innerHTML;
+    };
+
+    function showTab(type, button) {
+      ["volunteer", "assignments"].forEach(t =>
+        $(t).hidden = t !== type);
+
+      document.querySelectorAll(".tab-btn").forEach(b =>
+        b.classList.toggle("selected", b === button));
+
+      render();
+    }
+
+    // Create and Update Registration
+    form.onsubmit = event => {
+      event.preventDefault();
+
+      const record = Object.fromEntries(new FormData(form));
+      Object.keys(record).forEach(k => record[k] = record[k].trim());
+
+      if (Object.values(record).some(v => !v))
+        return alert("Please complete all required fields.");
+
+      const volunteers = read("charityVolunteers");
+      const existing = currentVolunteer();
+
+      if (existing && !editing)
+        return alert("You are already registered. Click Edit to update your details.");
+
+      if (volunteers.some(v =>
+        v.email.toLowerCase() === record.email.toLowerCase() &&
+        v.id !== volunteerId))
+        return alert("This email address is already registered.");
+
+      record.id = existing ? existing.id : crypto.randomUUID();
+      record.status = existing ? existing.status : "Registered";
+
+      if (existing) {
+        const index = volunteers.findIndex(v => v.id === volunteerId);
+        volunteers[index] = record;
+      } else {
+        volunteers.push(record);
+      }
+
+      volunteerId = record.id;
+
+      localStorage.setItem("currentVolunteerId", volunteerId);
+      localStorage.setItem("charityVolunteers", JSON.stringify(volunteers));
+
+      alert(existing ? "Registration updated successfully." :
+        "Volunteer registration successful.");
+
+      form.reset();
+      render();
+    };
+
+    // Read Registration
+    function viewVolunteer() {
+      const v = currentVolunteer();
+      if (!v) return;
+
+      alert(
+        "Full Name: " + v.name +
+        "\nEmail: " + v.email +
+        "\nContact Number: " + v.phone +
+        "\nSkills: " + v.skills +
+        "\nAvailability: " + v.availability +
+        "\nStatus: " + v.status
+      );
+    }
+
+    // Update Registration
+    function editVolunteer() {
+      const v = currentVolunteer();
+      if (!v) return;
+
+      editing = true;
+
+      Object.keys(v).forEach(k => {
+        if (form.elements[k])
+          form.elements[k].value = v[k];
+      });
+
+      $("formTitle").textContent = "Update Volunteer Registration";
+      $("saveButton").textContent = "Update Registration";
+
+      form.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Delete or Withdraw Registration
+    function withdrawVolunteer() {
+      if (!currentVolunteer()) return;
+
+      if (myAssignments().some(a => a.status === "Assigned"))
+        return alert("You cannot withdraw while you have active assignments.");
+
+      if (!confirm("Are you sure you want to withdraw your registration?"))
+        return;
+
+      const volunteers = read("charityVolunteers");
+      const record = volunteers.find(v => v.id === volunteerId);
+
+      // Preserve records linked to previous assignments
+      if (myAssignments().length > 0) {
+        record.status = "Withdrawn";
+        localStorage.setItem("charityVolunteers", JSON.stringify(volunteers));
+      } else {
+        localStorage.setItem("charityVolunteers", JSON.stringify(
+          volunteers.filter(v => v.id !== volunteerId)));
+      }
+
+      localStorage.removeItem("currentVolunteerId");
+      volunteerId = null;
+
+      form.reset();
+      render();
+      alert("Registration withdrawn successfully.");
+    }
+
+    // View Assignment Details
+    function viewAssignment(id) {
+      const a = myAssignments().find(item => item.id === id);
+      if (!a) return;
+
+      const c = read("charityCampaigns").find(c => c.id === a.campaignId);
+
+      alert(
+        "Campaign: " + (c?.name || "Unavailable") +
+        "\nDescription: " + (c?.description || "-") +
+        "\nAssigned Role: " + a.role +
+        "\nAssignment Date: " + a.date +
+        "\nStatus: " + a.status
+      );
+    }
+
+    form.onreset = () => {
+      editing = false;
+      $("formTitle").textContent = "Volunteer Registration Form";
+      $("saveButton").textContent = "Register as Volunteer";
+    };
+
+    // Display Registration and Assignments
+    function render() {
+      const v = currentVolunteer();
+      const assignments = myAssignments();
+      const campaigns = read("charityCampaigns");
+
+      $("registrationStatus").textContent = v ? v.status : "Not Registered";
+      $("totalAssignments").textContent =
+        new Set(assignments.filter(a => a.status !== "Cancelled")
+          .map(a => a.campaignId)).size;
+
+      $("completedAssignments").textContent =
+        assignments.filter(a => a.status === "Completed").length;
+
+      $("volunteerTable").innerHTML = v ? `
+        <tr>
+          <td>${safe(v.name)}</td>
+          <td>${safe(v.email)}</td>
+          <td>${safe(v.phone)}</td>
+          <td>${safe(v.skills)}</td>
+          <td>${safe(v.availability)}</td>
+          <td><span class="badge badge-blue">${safe(v.status)}</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="btn btn-sm btn-secondary" onclick="viewVolunteer()">View</button>
+              <button class="btn btn-sm btn-edit" onclick="editVolunteer()">Edit</button>
+              <button class="btn btn-sm btn-delete" onclick="withdrawVolunteer()">Withdraw</button>
+            </div>
+          </td>
+        </tr>` : `
+        <tr><td colspan="7" style="text-align:center">
+          No volunteer registration found.
+        </td></tr>`;
+
+      $("assignmentTable").innerHTML = "";
+
+      assignments.forEach(a => {
+        const c = campaigns.find(c => c.id === a.campaignId);
+        const row = $("assignmentTable").insertRow();
+
+        row.innerHTML = `
+          <td>${safe(c?.name || "Unavailable")}</td>
+          <td>${safe(a.role)}</td>
+          <td>${safe(a.date)}</td>
+          <td>${safe(a.status)}</td>
+          <td></td>`;
+
+        const button = document.createElement("button");
+        button.className = "btn btn-sm btn-secondary";
+        button.textContent = "View";
+        button.onclick = () => viewAssignment(a.id);
+        row.lastElementChild.appendChild(button);
+      });
+
+      if (!assignments.length)
+        $("assignmentTable").innerHTML = `
+          <tr><td colspan="5" style="text-align:center">
+            No assignments found.
+          </td></tr>`;
+    }
+
+    window.addEventListener("storage", render);
+    render();
+  </script>
 </body>
 </html>
