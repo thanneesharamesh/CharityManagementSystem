@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charity Management System</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .tab-btn { border: none; }
+    .tab-btn.selected { background: #0f172a; color: white; }
+    progress { width: 100px; accent-color: #22c55e; }
+  </style>
 </head>
 <body>
   <div class="app-layout">
@@ -13,21 +18,398 @@
         <h1>Charity Management</h1>
         <p>Centralised Non-Profit Portal</p>
       </div>
-      <nav class="role-switch" aria-label="Portal mode">
-        <a href="donor-beneficiary-management.html" class="role-btn active" aria-current="true">Admin Mode</a>
+      <nav class="role-switch">
+        <a href="donor-beneficiary-management.html" class="role-btn active">Admin Mode</a>
         <a href="donate.html" class="role-btn">User Mode</a>
       </nav>
       <div class="nav-group-label">Admin Modules</div>
-      <a href="fundraising-campaign.html" class="nav-item active" aria-current="page">Fundraising Campaign Management</a>
+      <a href="fundraising-campaign.html" class="nav-item active">Fundraising Campaign Management</a>
       <a href="donor-beneficiary-management.html" class="nav-item">Donor, Donation &amp; Beneficiary</a>
       <a href="assistance-distribution.html" class="nav-item">Assistance Distribution Management</a>
     </aside>
 
     <main class="main-content">
-      <div class="placeholder-box">
-        <h2>Fundraising Campaign Management</h2>
+      <div class="module-wrapper">
+        <div class="page-header">
+          <h2>Fundraising Campaign Management</h2>
+          <p>Manage fundraising campaigns and volunteer assignments.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Campaigns</div>
+            <div class="stat-value" id="totalCampaigns">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active Campaigns</div>
+            <div class="stat-value" id="activeCampaigns">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Funds Raised</div>
+            <div class="stat-value" id="totalFunds">RM 0.00</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Volunteers</div>
+            <div class="stat-value" id="totalVolunteers">0</div>
+          </div>
+        </div>
+
+        <div class="tab-bar">
+          <button class="tab-btn selected" onclick="showTab('campaign', this)">Campaign Management</button>
+          <button class="tab-btn" onclick="showTab('assignment', this)">Volunteer Assignments</button>
+        </div>
+
+        <!-- Campaign Management -->
+        <section id="campaign">
+          <div class="card">
+            <h3 class="card-title">Fundraising Campaign Details</h3>
+            <form id="campaignForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Campaign Name</label>
+                  <input name="name" maxlength="100" required>
+                </div>
+                <div class="form-group">
+                  <label>Target Amount (RM)</label>
+                  <input name="target" type="number" min="0.01" step="0.01" required>
+                </div>
+                <div class="form-group full-width">
+                  <label>Description</label>
+                  <textarea name="description" maxlength="500" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Start Date</label>
+                  <input name="startDate" type="date" required>
+                </div>
+                <div class="form-group">
+                  <label>End Date</label>
+                  <input name="endDate" type="date" required>
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select name="status">
+                    <option>Upcoming</option>
+                    <option>Active</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary">Save Campaign</button>
+                <button type="reset" class="btn btn-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="table-toolbar">
+              <h3 class="card-title">Campaign Records</h3>
+              <input id="campaignSearch" class="search-input" placeholder="Search campaigns..." oninput="render()">
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Campaign Name</th>
+                    <th>Target</th>
+                    <th>Amount Raised</th>
+                    <th>Progress</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="campaignTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Volunteer Assignments -->
+        <section id="assignment" hidden>
+          <div class="card">
+            <h3 class="card-title">Assign Volunteer to Campaign</h3>
+            <form id="assignmentForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Volunteer</label>
+                  <select name="volunteerId" id="assignmentVolunteer" required></select>
+                </div>
+                <div class="form-group">
+                  <label>Campaign</label>
+                  <select name="campaignId" id="assignmentCampaign" required></select>
+                </div>
+                <div class="form-group">
+                  <label>Assigned Role</label>
+                  <input name="role" required>
+                </div>
+                <div class="form-group">
+                  <label>Assignment Date</label>
+                  <input name="date" type="date" required>
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select name="status">
+                    <option>Assigned</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary">Save Assignment</button>
+                <button type="reset" class="btn btn-secondary">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">Assignment Records</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Volunteer</th>
+                    <th>Campaign</th>
+                    <th>Role</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="assignmentTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
   </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    const keys = {
+      campaign: "charityCampaigns",
+      volunteer: "charityVolunteers",
+      assignment: "charityAssignments"
+    };
+
+    const types = ["campaign", "assignment"];
+
+    const data = Object.fromEntries(Object.keys(keys).map(t =>
+      [t, JSON.parse(localStorage.getItem(keys[t]) || "[]")]));
+
+    const editing = {};
+
+    const money = n => "RM " + Number(n).toLocaleString("en-MY", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    const safe = value => {
+      const div = document.createElement("div");
+      div.textContent = value ?? "";
+      return div.innerHTML;
+    };
+
+    function showTab(type, button) {
+      types.forEach(t => $(t).hidden = t !== type);
+      document.querySelectorAll(".tab-btn").forEach(b =>
+        b.classList.toggle("selected", b === button));
+    }
+
+    function save() {
+      types.forEach(t =>
+        localStorage.setItem(keys[t], JSON.stringify(data[t])));
+      render();
+    }
+
+    // Create and Update Records
+    types.forEach(type => {
+      const form = $(type + "Form");
+
+      form.onsubmit = event => {
+        event.preventDefault();
+
+        const record = Object.fromEntries(new FormData(form));
+        Object.keys(record).forEach(k => record[k] = record[k].trim());
+
+        if (Object.values(record).some(v => !v))
+          return alert("Please complete all fields.");
+
+        const old = data[type].find(r => r.id === editing[type]);
+
+        if (type === "campaign") {
+          if (record.endDate < record.startDate)
+            return alert("Invalid campaign dates.");
+
+          record.target = Number(record.target);
+          record.raised = old ? Number(old.raised || 0) : 0;
+        }
+
+        if (type === "assignment") {
+          const campaign = data.campaign.find(c => c.id === record.campaignId);
+          const volunteer = data.volunteer.find(v => v.id === record.volunteerId);
+
+          if (!campaign || !volunteer ||
+              volunteer.status === "Withdrawn" ||
+              volunteer.status === "Rejected")
+            return alert("Select a valid campaign and registered volunteer.");
+
+          if (record.date < campaign.startDate || record.date > campaign.endDate)
+            return alert("Assignment date must be within campaign dates.");
+        }
+
+        record.id = old ? old.id : crypto.randomUUID();
+
+        if (old) Object.assign(old, record);
+        else data[type].push(record);
+
+        save();
+        form.reset();
+
+        alert(old ? "Record updated successfully." : "Record created successfully.");
+      };
+
+      form.onreset = () => delete editing[type];
+    });
+
+    // View, Edit and Delete Records
+    function action(type, id, operation) {
+      const record = data[type].find(r => r.id === id);
+      if (!record) return;
+
+      if (operation === "View") {
+        alert(Object.entries(record)
+          .filter(([k]) => k !== "id")
+          .map(([k, v]) => k + ": " + v).join("\n"));
+      }
+
+      if (operation === "Edit") {
+        const form = $(type + "Form");
+        editing[type] = id;
+
+        Object.keys(record).forEach(k => {
+          if (form.elements[k])
+            form.elements[k].value = record[k];
+        });
+
+        form.scrollIntoView({ behavior: "smooth" });
+      }
+
+      if (operation === "Delete") {
+        if (type !== "assignment" && data.assignment.some(a =>
+          a[type + "Id"] === id))
+          return alert("Remove related assignments first.");
+
+        if (confirm("Delete this record?")) {
+          data[type] = data[type].filter(r => r.id !== id);
+          $(type + "Form").reset();
+          save();
+        }
+      }
+    }
+
+    function addRow(type, record, cells) {
+      const row = $(type + "Table").insertRow();
+
+      cells.forEach(value =>
+        row.insertCell().innerHTML = value);
+
+      const cell = row.insertCell();
+      cell.className = "actions-cell";
+
+      ["View", "Edit", "Delete"].forEach((operation, i) => {
+        const button = document.createElement("button");
+
+        button.className = "btn btn-sm " +
+          ["btn-secondary", "btn-edit", "btn-delete"][i];
+
+        button.textContent = operation;
+        button.onclick = () => action(type, record.id, operation);
+
+        cell.appendChild(button);
+      });
+    }
+
+    function options(id, records, label) {
+      const select = $(id);
+      const previous = select.value;
+
+      select.replaceChildren(new Option(label, ""));
+
+      records.forEach(r =>
+        select.add(new Option(r.name, r.id)));
+
+      select.value = previous;
+    }
+
+    // Display Records and Calculate Fundraising Progress
+    function render() {
+      types.forEach(t => $(t + "Table").innerHTML = "");
+
+      const search = $("campaignSearch").value.toLowerCase();
+
+      data.campaign.filter(c => c.name.toLowerCase().includes(search))
+        .forEach(c => {
+          const progress = Number(c.raised || 0) / c.target * 100;
+
+          addRow("campaign", c, [
+            safe(c.name),
+            money(c.target),
+            money(c.raised || 0),
+            `<progress max="100" value="${Math.min(100, progress)}"></progress> ${progress.toFixed(1)}%`,
+            safe(c.startDate),
+            safe(c.endDate),
+            safe(c.status)
+          ]);
+        });
+
+      data.assignment.forEach(a => addRow("assignment", a, [
+        safe(data.volunteer.find(v => v.id === a.volunteerId)?.name),
+        safe(data.campaign.find(c => c.id === a.campaignId)?.name),
+        safe(a.role),
+        safe(a.date),
+        safe(a.status)
+      ]));
+
+      $("totalCampaigns").textContent = data.campaign.length;
+
+      $("activeCampaigns").textContent = data.campaign.filter(c =>
+        c.status === "Active").length;
+
+      $("totalVolunteers").textContent = data.volunteer.length;
+
+      $("totalFunds").textContent = money(data.campaign.reduce((sum, c) =>
+        sum + Number(c.raised || 0), 0));
+
+      options("assignmentVolunteer", data.volunteer.filter(v =>
+        !["Withdrawn", "Rejected"].includes(v.status)), "Select volunteer");
+
+      options("assignmentCampaign", data.campaign, "Select campaign");
+
+      types.forEach(t => {
+        if (!$(t + "Table").rows.length) {
+          const cell = $(t + "Table").insertRow().insertCell();
+          cell.colSpan = { campaign: 8, assignment: 6 }[t];
+          cell.textContent = "No records found.";
+          cell.style.textAlign = "center";
+        }
+      });
+    }
+
+    window.addEventListener("storage", event => {
+      if (Object.values(keys).includes(event.key)) {
+        const type = Object.keys(keys).find(t => keys[t] === event.key);
+        data[type] = JSON.parse(event.newValue || "[]");
+        render();
+      }
+    });
+
+    render();
+  </script>
 </body>
 </html>
